@@ -4,21 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SigningActivity">
+    tools:context=".SignUpActivity">
 
     <LinearLayout
         android:id="@+id/sign_up_fields"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="285dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="88dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="285dp"
-        android:layout_marginEnd="16dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/sign_up_top"
@@ -38,8 +38,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="24dp"
-            android:textSize="16sp"
-            android:hint="@string/first_name">
+            android:hint="@string/first_name"
+            android:textSize="16sp">
 
         </EditText>
 
@@ -50,8 +50,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:textSize="16sp"
-            android:hint="@string/last_name">
+            android:hint="@string/last_name"
+            android:textSize="16sp">
 
         </EditText>
 
@@ -62,8 +62,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:textSize="16sp"
-            android:hint="@string/email">
+            android:hint="@string/email"
+            android:textSize="16sp">
 
         </EditText>
 
@@ -74,8 +74,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:textSize="16sp"
-            android:hint="@string/password">
+            android:hint="@string/password"
+            android:textSize="16sp">
 
         </EditText>
 
@@ -85,15 +85,14 @@
         android:id="@+id/sign_up_button"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="156dp"
+        android:background="@drawable/rounded_button"
         android:text="@string/sign_up2"
-        android:textSize="18sp"
         android:textAllCaps="false"
-        >
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
     </Button>
 
@@ -101,12 +100,11 @@
         android:id="@+id/verification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="94dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="94dp"
-        >
+        app:layout_constraintStart_toStartOf="parent">
 
         <TextView
             android:id="@+id/sign_up_activation"
@@ -115,7 +113,7 @@
             android:fontFamily="sans-serif-medium"
             android:padding="5dp"
             android:text="@string/sign_up"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
 
         <TextView
             android:id="@+id/log_in_activation"
@@ -124,7 +122,7 @@
             android:fontFamily="sans-serif-black"
             android:padding="5dp"
             android:text="@string/log_in"
-            android:textSize="18sp"/>
+            android:textSize="18sp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

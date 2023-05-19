@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.homework_1.databinding.ActivityLoggingBinding
 
-class LoggingActivity : AppCompatActivity() {
+class LogInActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoggingBinding
 
@@ -15,7 +15,7 @@ class LoggingActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.returnToSigning.setOnClickListener {
-            startActivity(Intent(this, SigningActivity::class.java))
+            startActivity(Intent(this, SignUpActivity::class.java))
         }
     }
 }

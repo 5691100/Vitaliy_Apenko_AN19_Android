@@ -3,10 +3,9 @@ package com.example.homework_1
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.example.homework_1.databinding.ActivityMainBinding
 import com.example.homework_1.databinding.ActivitySecondBinding
 
-class SecondActivity : AppCompatActivity() {
+class OnboardingFirstActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySecondBinding
 
@@ -16,7 +15,7 @@ class SecondActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.skipButton.setOnClickListener {
-            startActivity(Intent(this, SigningActivity::class.java))
+            startActivity(Intent(this, SignUpActivity::class.java))
         }
     }
 }
