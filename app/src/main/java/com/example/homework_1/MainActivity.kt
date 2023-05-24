@@ -15,15 +15,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.logInActivation.setOnClickListener {
-            startActivity(Intent(this, LoggingActivity::class.java))
+            startActivity(Intent(this, LogInActivity::class.java))
         }
 
         binding.signUpActivation.setOnClickListener {
-            startActivity(Intent(this, SigningActivity::class.java))
+            startActivity(Intent(this, SignUpActivity::class.java))
         }
 
         binding.discoverButton.setOnClickListener {
-            startActivity(Intent(this, SecondActivity::class.java))
+            startActivity(Intent(this, OnboardingFirstActivity::class.java))
         }
 
 

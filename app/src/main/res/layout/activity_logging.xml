@@ -4,20 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoggingActivity">
+    tools:context=".LogInActivity">
+
     <LinearLayout
         android:id="@+id/sign_up_fields"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="420dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="88dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginBottom="420dp"
-        android:layout_marginEnd="16dp">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/log_in_top"
@@ -37,8 +38,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="24dp"
-            android:textSize="16sp"
-            android:hint="@string/email">
+            android:hint="@string/email"
+            android:textSize="16sp">
 
         </EditText>
 
@@ -49,8 +50,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:textSize="16sp"
-            android:hint="@string/password">
+            android:hint="@string/password"
+            android:textSize="16sp">
 
         </EditText>
 
@@ -60,28 +61,28 @@
         android:id="@+id/log_in_button"
         android:layout_width="260dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/rounded_button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginBottom="156dp"
+        android:background="@drawable/rounded_button"
         android:text="@string/log_in"
-        android:textSize="18sp"
         android:textAllCaps="false"
-        >
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
     </Button>
-        <TextView
-            android:id="@+id/return_to_signing"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginBottom="94dp"
-            android:fontFamily="sans-serif-medium"
-            android:padding="5dp"
-            android:text="@string/return_to_sign"
-            android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/return_to_signing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="94dp"
+        android:fontFamily="sans-serif-medium"
+        android:padding="5dp"
+        android:text="@string/return_to_sign"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
