@@ -12,4 +12,15 @@
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
     <string name="return_to_sign">Return to Sign-up</string>
+    <string name="all_notes">All notes</string>
+    <string name="add_new">Add new</string>
+    <string name="logout">Logout</string>
+    <string name="back">Back</string>
+    <string name="add_notes">Add notes</string>
+    <string name="title">Title</string>
+    <string name="message">Message</string>
+    <string name="add">Add</string>
+    <string name="title_notes">Title</string>
+    <string name="message_note">Message</string>
+    <string name="date">01/03/2023</string>
 </resources>
