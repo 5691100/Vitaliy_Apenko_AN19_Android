@@ -14,14 +14,8 @@ object DataBase {
 
     fun initDb (context: Context) {
         dataBase = Room.databaseBuilder(context, AppDataBase::class.java, "data-base")
-            .allowMainThreadQueries()
             .build()
         noteDao = dataBase?.getNoteDao()
         userDao = dataBase?.getUserDao()
     }
-
-    val listOfNotes = arrayListOf<Note>()
-
-    val listOfUsers = arrayListOf<User>()
-
 }

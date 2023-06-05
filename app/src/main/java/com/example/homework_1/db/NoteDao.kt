@@ -7,11 +7,14 @@ import com.example.homework_1.model.entity.NoteEntity
 interface NoteDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertNote(note: NoteEntity)
+    suspend fun insertNote(note: NoteEntity)
 
     @Delete
-    fun deleteNote(note: NoteEntity)
+    suspend fun deleteNote(note: NoteEntity)
 
     @Query("SELECT * FROM note")
-    fun getAllNotes(): List<NoteEntity>
+    suspend fun getAllNotes(): List<NoteEntity>
+
+    @Query("SELECT * FROM note WHERE userEmail=(:userEmail)")
+    suspend fun getNotesByEmail(userEmail: String): List<NoteEntity>
 }

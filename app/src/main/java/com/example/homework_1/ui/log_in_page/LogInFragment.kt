@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import com.example.homework_1.R
 import com.example.homework_1.databinding.FragmentLogInBinding
 import com.example.homework_1.repositories.SharedPreferenceRepository
-import com.example.homework_1.ui.notes_list.NotesListFragment
+import com.example.homework_1.ui.notes_list.NavigationFragment
 import com.example.homework_1.ui.sign_up_page.SignUpFragment
 import com.example.homework_1.util.getString
 import com.example.homework_1.util.replaceFragment
@@ -38,29 +38,36 @@ class LogInFragment : Fragment() {
         binding.logInButton.setOnClickListener {
             val email = binding.emailEditText.getString()
             val password = binding.passwordEditText.getString()
-            checkLogIn(email, password)
+            viewModel.run {
+                checkLogin(email, password)
+                isPasswordCorrect = {
+                    binding.root.post {
+                        SharedPreferenceRepository.saveUserEmail(email)
+                        parentFragmentManager.replaceFragment(
+                            R.id.container,
+                            NavigationFragment(),
+                            true
+                        )
+                        Toast.makeText(requireContext(), "LogIn successful!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+                isPasswordIncorrect = {
+                    binding.root.post {
+                        Toast.makeText(requireContext(), "Incorrect password!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+                isUserNotExist = {
+                    binding.root.post {
+                        Toast.makeText(requireContext(), "User doesn't exist!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
+            }
         }
         binding.returnToSignUp.setOnClickListener {
             parentFragmentManager.replaceFragment(R.id.container, SignUpFragment(), true)
-        }
-    }
-
-
-    private fun checkLogIn(email: String, password: String): Boolean {
-        val user = viewModel.findUserByEmail(email)
-        return if (user != null) {
-            if (user.userEmailPassword == password) {
-                SharedPreferenceRepository.saveUserEmail(email)
-                parentFragmentManager.replaceFragment(R.id.container, NotesListFragment(), true)
-                Toast.makeText(requireContext(), "LogIn successful!", Toast.LENGTH_SHORT).show()
-                true
-            } else {
-                Toast.makeText(requireContext(), "Incorrect password!", Toast.LENGTH_SHORT).show()
-                false
-            }
-        } else {
-            Toast.makeText(requireContext(), "User doesn't exist!", Toast.LENGTH_SHORT).show()
-            false
         }
     }
 }

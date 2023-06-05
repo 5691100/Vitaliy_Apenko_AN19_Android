@@ -36,8 +36,10 @@ class SignUpFragment : Fragment() {
 
         viewModel.run {
             userSaved = {
-                Toast.makeText(requireContext(), "Sign-Up successful", Toast.LENGTH_LONG).show()
-                parentFragmentManager.replaceFragment(R.id.container, LogInFragment(), true)
+                binding.root.post {
+                    Toast.makeText(requireContext(), "Sign-Up successful", Toast.LENGTH_LONG).show()
+                    parentFragmentManager.replaceFragment(R.id.container, LogInFragment(), true)
+                }
             }
         }
 

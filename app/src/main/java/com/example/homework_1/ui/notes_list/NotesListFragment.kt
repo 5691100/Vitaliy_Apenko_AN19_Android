@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.homework_1.R
 import com.example.homework_1.databinding.FragmentNotesListBinding
 import com.example.homework_1.model.Note
@@ -41,35 +42,8 @@ class NotesListFragment : Fragment() {
                     setList(it)
                 }
             }
-            SharedPreferenceRepository.getUserEmail()?.let { getUserNotes(it) }
-        }
-
-        binding.addNewNote.setOnClickListener {
-            parentFragmentManager.replaceFragment(R.id.container, AddNoteFragment(), true)
-        }
-        binding.logOut.setOnClickListener {
-            parentFragmentManager.popBackStack()
-        }
-
-        binding.bottomNavigationView.setOnItemSelectedListener {
-            when (it.itemId) {
-                R.id.notes_list -> {
-                    parentFragmentManager.replaceFragment(R.id.container, NotesListFragment(), true)
-                    return@setOnItemSelectedListener true
-                }
-                R.id.search -> {
-                    parentFragmentManager.replaceFragment(R.id.container, SearchFragment(), true)
-                    return@setOnItemSelectedListener true
-                }
-                R.id.add_note -> {
-                    parentFragmentManager.replaceFragment(R.id.container, AddNoteFragment(), true)
-                    return@setOnItemSelectedListener true
-                }
-                R.id.profile -> {
-                    parentFragmentManager.replaceFragment(R.id.container, ProfileFragment(), true)
-                    return@setOnItemSelectedListener true
-                }
-                else -> return@setOnItemSelectedListener true
+            SharedPreferenceRepository.getUserEmail()?.let {
+                getUserNotes(it)
             }
         }
     }

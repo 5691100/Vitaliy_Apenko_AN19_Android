@@ -6,8 +6,8 @@ import com.example.homework_1.model.entity.UserEntity
 
 class UserRepository {
 
-    fun getUsers(): ArrayList<User> {
-        return (DataBase.userDao?.getAllNotes()?.map {
+    suspend fun getAllUsers(): ArrayList<User> {
+        return (DataBase.userDao?.getAllUsers()?.map {
             User(
                 it.firstName,
                 it.secondName,
@@ -17,20 +17,28 @@ class UserRepository {
         } as? ArrayList<User>) ?: arrayListOf()
     }
 
-    fun addUser(user: User): Boolean {
+    suspend fun getUser(email: String): User? = DataBase.userDao?.getUser(email)
+
+    suspend fun addUser(user: User): Boolean {
         DataBase.userDao?.insertUser(
             UserEntity(
-            user.firstName,
-            user.secondName,
-            user.userEmail,
-            user.userEmailPassword
-        )
+                user.firstName,
+                user.secondName,
+                user.userEmail,
+                user.userEmailPassword
+            )
         )
         return true
     }
 
-    fun removeUser(user: User) {
-        DataBase.listOfUsers.remove(user)
+    suspend fun removeUser(user: User) {
+        DataBase.userDao?.deleteUser(
+            UserEntity(
+                user.firstName,
+                user.secondName,
+                user.userEmail,
+                user.userEmailPassword
+            )
+        )
     }
-
 }

@@ -8,10 +8,13 @@ import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.homework_1.R
 import com.example.homework_1.databinding.FragmentAddNoteBinding
 import com.example.homework_1.model.Note
 import com.example.homework_1.repositories.SharedPreferenceRepository
+import com.example.homework_1.ui.notes_list.NotesListFragment
 import com.example.homework_1.util.getString
+import com.example.homework_1.util.replaceFragment
 import com.example.homework_1.validate.ValidationResult
 import com.example.homework_1.validate.titleValidation
 import java.util.*
@@ -36,8 +39,14 @@ class AddNoteFragment : Fragment() {
 
         viewModel.run {
             noteSaved = {
-                Toast.makeText(requireContext(), "NoteSaved", Toast.LENGTH_LONG).show()
-                parentFragmentManager.popBackStack()
+                binding.root.post {
+                    Toast.makeText(requireContext(), "NoteSaved", Toast.LENGTH_LONG).show()
+                    parentFragmentManager.replaceFragment(
+                        R.id.container2,
+                        NotesListFragment(),
+                        true
+                    )
+                }
             }
         }
 
@@ -46,9 +55,6 @@ class AddNoteFragment : Fragment() {
         }
         binding.addNoteButton.setOnClickListener {
             addNote()
-        }
-        binding.backToNotes.setOnClickListener {
-            parentFragmentManager.popBackStack()
         }
     }
 
