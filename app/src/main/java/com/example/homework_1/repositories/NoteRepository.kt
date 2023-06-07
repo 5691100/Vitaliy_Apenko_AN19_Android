@@ -1,14 +1,19 @@
 package com.example.homework_1.repositories
 
-import com.example.homework_1.db.DataBase
+import com.example.homework_1.db.DataBaseModule
+import com.example.homework_1.db.NoteDao
 import com.example.homework_1.model.Note
 import com.example.homework_1.model.entity.NoteEntity
+import javax.inject.Inject
 
-class NoteRepository {
+class NoteRepository @Inject constructor(
+    private val noteDao: NoteDao
+) {
 
     suspend fun getNotes(): ArrayList<Note> {
-        return (DataBase.noteDao?.getAllNotes()?.map {
+        return (noteDao.getAllNotes()?.map {
             Note(
+                it.id,
                 it.userEmail,
                 it.title,
                 it.message,
@@ -18,8 +23,9 @@ class NoteRepository {
     }
 
     suspend fun getUserNotesByEmail(email: String): ArrayList<Note> {
-        return (DataBase.noteDao?.getNotesByEmail(email)?.map {
+        return (noteDao.getNotesByEmail(email)?.map {
             Note(
+                it.id,
                 it.userEmail,
                 it.title,
                 it.message,
@@ -29,9 +35,9 @@ class NoteRepository {
     }
 
     suspend fun addNotes(note: Note): Boolean {
-        DataBase.noteDao?.insertNote(
+        noteDao.insertNote(
             NoteEntity(
-                0,
+                note.id,
                 note.userEmail,
                 note.title,
                 note.message,
@@ -42,9 +48,9 @@ class NoteRepository {
     }
 
     suspend fun removeNote(note: Note) {
-        DataBase.noteDao?.deleteNote(
+        noteDao.deleteNote(
             NoteEntity(
-                0,
+                note.id,
                 note.userEmail,
                 note.title,
                 note.message,

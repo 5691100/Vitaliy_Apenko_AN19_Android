@@ -13,8 +13,14 @@ import com.example.homework_1.model.Note
 import com.example.homework_1.repositories.SharedPreferenceRepository
 import com.example.homework_1.ui.search.adapter.SearchAdapter
 import com.example.homework_1.util.getString
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class SearchFragment : Fragment() {
+
+    @Inject
+    lateinit var sharedPreferenceRepository: SharedPreferenceRepository
 
     private val viewModel: SearchViewModel by viewModels()
 
@@ -24,7 +30,7 @@ class SearchFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentSearchBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -35,7 +41,7 @@ class SearchFragment : Fragment() {
         binding.searchEditText.doAfterTextChanged {
 
             val input = binding.searchEditText.getString()
-            SharedPreferenceRepository.getUserEmail()?.let {
+            sharedPreferenceRepository.getUserEmail()?.let {
                 viewModel.run {
                     getUserSearchedNotes(it, input)
                     notesList.observe(/* owner = */ viewLifecycleOwner) {

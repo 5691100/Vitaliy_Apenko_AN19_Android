@@ -3,6 +3,7 @@ package com.example.homework_1.model.entity
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.example.homework_1.model.User
 
 @Entity(tableName = "user")
 data class UserEntity(

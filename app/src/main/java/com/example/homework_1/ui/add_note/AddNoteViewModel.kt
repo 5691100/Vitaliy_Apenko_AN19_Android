@@ -4,14 +4,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homework_1.model.Note
 import com.example.homework_1.repositories.NoteRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class AddNoteViewModel : ViewModel() {
+@HiltViewModel
+class AddNoteViewModel @Inject constructor(
+    private val noteRepository: NoteRepository,
+) : ViewModel() {
+
+
 
     var noteSaved: (() -> Unit)? = null
-
-    private val noteRepository = NoteRepository()
 
     fun addNewNote(note: Note) {
         viewModelScope.launch(Dispatchers.IO) {

@@ -14,7 +14,9 @@ import com.example.homework_1.ui.notes_list.NavigationFragment
 import com.example.homework_1.ui.sign_up_page.SignUpFragment
 import com.example.homework_1.util.getString
 import com.example.homework_1.util.replaceFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LogInFragment : Fragment() {
 
     private val viewModel: LogInViewModel by viewModels()
@@ -42,11 +44,10 @@ class LogInFragment : Fragment() {
                 checkLogin(email, password)
                 isPasswordCorrect = {
                     binding.root.post {
-                        SharedPreferenceRepository.saveUserEmail(email)
                         parentFragmentManager.replaceFragment(
                             R.id.container,
                             NavigationFragment(),
-                            true
+                            false
                         )
                         Toast.makeText(requireContext(), "LogIn successful!", Toast.LENGTH_SHORT)
                             .show()

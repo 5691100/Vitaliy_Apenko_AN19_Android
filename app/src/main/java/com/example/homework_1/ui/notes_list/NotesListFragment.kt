@@ -17,8 +17,14 @@ import com.example.homework_1.ui.notes_list.adapter.NoteAdapter
 import com.example.homework_1.ui.profile.ProfileFragment
 import com.example.homework_1.ui.search.SearchFragment
 import com.example.homework_1.util.replaceFragment
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class NotesListFragment : Fragment() {
+
+    @Inject
+    lateinit var sharedPreferenceRepository: SharedPreferenceRepository
 
     private val viewModel: NotesListViewModel by viewModels()
 
@@ -42,10 +48,11 @@ class NotesListFragment : Fragment() {
                     setList(it)
                 }
             }
-            SharedPreferenceRepository.getUserEmail()?.let {
+            sharedPreferenceRepository.getUserEmail()?.let {
                 getUserNotes(it)
             }
         }
+
     }
 
     private fun setList(list: ArrayList<Note>) {

@@ -1,13 +1,18 @@
 package com.example.homework_1.repositories
 
-import com.example.homework_1.db.DataBase
+import com.example.homework_1.db.DataBaseModule
+import com.example.homework_1.db.UserDao
 import com.example.homework_1.model.User
 import com.example.homework_1.model.entity.UserEntity
+import com.example.homework_1.util.getUserFromEntity
+import javax.inject.Inject
 
-class UserRepository {
+class UserRepository @Inject constructor(
+    private val userDao: UserDao
+) {
 
     suspend fun getAllUsers(): ArrayList<User> {
-        return (DataBase.userDao?.getAllUsers()?.map {
+        return (userDao.getAllUsers()?.map {
             User(
                 it.firstName,
                 it.secondName,
@@ -17,28 +22,32 @@ class UserRepository {
         } as? ArrayList<User>) ?: arrayListOf()
     }
 
-    suspend fun getUser(email: String): User? = DataBase.userDao?.getUser(email)
-
-    suspend fun addUser(user: User): Boolean {
-        DataBase.userDao?.insertUser(
-            UserEntity(
-                user.firstName,
-                user.secondName,
-                user.userEmail,
-                user.userEmailPassword
-            )
-        )
-        return true
+    suspend fun getUser(email: String): User {
+        val userEntity = userDao.getUser(email)
+        return getUserFromEntity(userEntity)
     }
 
-    suspend fun removeUser(user: User) {
-        DataBase.userDao?.deleteUser(
-            UserEntity(
-                user.firstName,
-                user.secondName,
-                user.userEmail,
-                user.userEmailPassword
+
+        suspend fun addUser(user: User): Boolean {
+            userDao.insertUser(
+                UserEntity(
+                    user.firstName,
+                    user.secondName,
+                    user.userEmail,
+                    user.userEmailPassword
+                )
             )
-        )
+            return true
+        }
+
+        suspend fun removeUser(user: User) {
+            userDao.deleteUser(
+                UserEntity(
+                    user.firstName,
+                    user.secondName,
+                    user.userEmail,
+                    user.userEmailPassword
+                )
+            )
+        }
     }
-}

@@ -14,9 +14,15 @@ import com.example.homework_1.repositories.SharedPreferenceRepository
 import com.example.homework_1.ui.log_in_page.LogInFragment
 import com.example.homework_1.ui.notes_list.NotesListFragment
 import com.example.homework_1.util.replaceFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class ProfileFragment : Fragment() {
+
+    @Inject
+    lateinit var sharedPreferenceRepository: SharedPreferenceRepository
 
     private val viewModel: ProfileViewModel by viewModels()
 
@@ -35,7 +41,7 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.swipeRefreshLayout.setOnRefreshListener {
-            SharedPreferenceRepository.getUserEmail()?.let {
+            sharedPreferenceRepository.getUserEmail()?.let {
                 lifecycleScope.launch {
                     binding.profileName.text = viewModel.getUserNameByEmail(it)
                     binding.numberOfNotes.text = viewModel.getUserNotesNumber(it)
@@ -44,8 +50,7 @@ class ProfileFragment : Fragment() {
             binding.swipeRefreshLayout.isRefreshing = false
         }
 
-
-        SharedPreferenceRepository.getUserEmail()?.let {
+        sharedPreferenceRepository.getUserEmail()?.let {
             lifecycleScope.launch {
                 binding.profileName.text = viewModel.getUserNameByEmail(it)
                 binding.numberOfNotes.text = viewModel.getUserNotesNumber(it)
@@ -53,23 +58,22 @@ class ProfileFragment : Fragment() {
         }
 
         binding.deleteNotes.setOnClickListener {
-            SharedPreferenceRepository.getUserEmail()?.let { it1 -> viewModel.deleteAllNotes(it1) }
+            sharedPreferenceRepository.getUserEmail()?.let { email -> viewModel.deleteAllNotes(email) }
             Toast.makeText(requireContext(), "All notes deleted!", Toast.LENGTH_SHORT).show()
         }
 
         binding.logOut.setOnClickListener {
             parentFragmentManager.replaceFragment(R.id.container, LogInFragment(), false)
-            SharedPreferenceRepository.clearUserPreferences()
+            sharedPreferenceRepository.clearUserPreferences()
         }
 
         binding.deleteProfileButton.setOnClickListener {
-            SharedPreferenceRepository.getUserEmail()?.let { it1 ->
-                viewModel.deleteAllNotes(it1)
-                viewModel.deleteUser(it1)
+            sharedPreferenceRepository.getUserEmail()?.let { email ->
+                viewModel.deleteAllNotes(email)
+                viewModel.deleteUser(email)
             }
             parentFragmentManager.replaceFragment(R.id.container, LogInFragment(), false)
-            SharedPreferenceRepository.clearUserPreferences()
+            sharedPreferenceRepository.clearUserPreferences()
         }
-
     }
 }
