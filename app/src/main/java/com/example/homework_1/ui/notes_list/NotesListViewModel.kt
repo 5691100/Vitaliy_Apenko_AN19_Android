@@ -18,7 +18,6 @@ class NotesListViewModel @Inject constructor(
 
     val notesList = MutableLiveData<ArrayList<Note>?>()
 
-
     fun getNotes() {
         viewModelScope.launch(Dispatchers.IO) {
             notesList.postValue(noteRepository.getNotes())

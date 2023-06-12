@@ -57,7 +57,6 @@ class AddNoteFragment : Fragment() {
                 }
             }
         }
-
         binding.titleAddEditText.doAfterTextChanged {
             isValidTitle()
         }
@@ -83,7 +82,7 @@ class AddNoteFragment : Fragment() {
         if (email != null) {
             viewModel.addNewNote(
                 Note(
-                    id.toLong(),
+                    0,
                     email,
                     binding.titleAddEditText.getString(),
                     binding.messageAddEditText.getString(),

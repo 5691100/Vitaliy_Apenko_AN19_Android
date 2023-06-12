@@ -32,7 +32,7 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -42,23 +42,36 @@ class ProfileFragment : Fragment() {
 
         binding.swipeRefreshLayout.setOnRefreshListener {
             sharedPreferenceRepository.getUserEmail()?.let {
-                lifecycleScope.launch {
-                    binding.profileName.text = viewModel.getUserNameByEmail(it)
-                    binding.numberOfNotes.text = viewModel.getUserNotesNumber(it)
+                viewModel.getUserNameByEmail(it)
+                viewModel.getUserNotesNumber(it)
+            }
+            viewModel.run {
+                user.observe(viewLifecycleOwner) {
+                    binding.profileName.text = it
+                }
+                numberOfNotes.observe(viewLifecycleOwner) {
+                    binding.numberOfNotes.text = it.toString()
                 }
             }
             binding.swipeRefreshLayout.isRefreshing = false
         }
 
         sharedPreferenceRepository.getUserEmail()?.let {
-            lifecycleScope.launch {
-                binding.profileName.text = viewModel.getUserNameByEmail(it)
-                binding.numberOfNotes.text = viewModel.getUserNotesNumber(it)
+            viewModel.getUserNameByEmail(it)
+            viewModel.getUserNotesNumber(it)
+        }
+        viewModel.run {
+            user.observe(viewLifecycleOwner) {
+                binding.profileName.text = it
+            }
+            numberOfNotes.observe(viewLifecycleOwner) {
+                binding.numberOfNotes.text = it.toString()
             }
         }
 
         binding.deleteNotes.setOnClickListener {
-            sharedPreferenceRepository.getUserEmail()?.let { email -> viewModel.deleteAllNotes(email) }
+            sharedPreferenceRepository.getUserEmail()
+                ?.let { email -> viewModel.deleteAllNotes(email) }
             Toast.makeText(requireContext(), "All notes deleted!", Toast.LENGTH_SHORT).show()
         }
 

@@ -22,32 +22,35 @@ class UserRepository @Inject constructor(
         } as? ArrayList<User>) ?: arrayListOf()
     }
 
-    suspend fun getUser(email: String): User {
+    suspend fun getUser(email: String): User? {
         val userEntity = userDao.getUser(email)
-        return getUserFromEntity(userEntity)
-    }
-
-
-        suspend fun addUser(user: User): Boolean {
-            userDao.insertUser(
-                UserEntity(
-                    user.firstName,
-                    user.secondName,
-                    user.userEmail,
-                    user.userEmailPassword
-                )
-            )
-            return true
-        }
-
-        suspend fun removeUser(user: User) {
-            userDao.deleteUser(
-                UserEntity(
-                    user.firstName,
-                    user.secondName,
-                    user.userEmail,
-                    user.userEmailPassword
-                )
-            )
+        return if (userEntity != null) {
+            getUserFromEntity(userEntity)
+        } else {
+            null
         }
     }
+
+    suspend fun addUser(user: User): Boolean {
+        userDao.insertUser(
+            UserEntity(
+                user.firstName,
+                user.secondName,
+                user.userEmail,
+                user.userEmailPassword
+            )
+        )
+        return true
+    }
+
+    suspend fun removeUser(user: User) {
+        userDao.deleteUser(
+            UserEntity(
+                user.firstName,
+                user.secondName,
+                user.userEmail,
+                user.userEmailPassword
+            )
+        )
+    }
+}

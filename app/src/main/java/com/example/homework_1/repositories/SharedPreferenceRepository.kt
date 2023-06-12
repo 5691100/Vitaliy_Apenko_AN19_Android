@@ -32,28 +32,28 @@ class SharedPreferenceRepository @Inject constructor(
 //    }
 
     fun setIsFirstOpen(isFirstOpen: Boolean) {
-        sharedPreferences?.edit {
+        sharedPreferences.edit {
             putBoolean(IS_FIRST_OPEN, isFirstOpen)
         }
     }
 
     fun isFirstOpen(): Boolean {
-        return sharedPreferences?.getBoolean(IS_FIRST_OPEN, true) ?: true
+        return sharedPreferences.getBoolean(IS_FIRST_OPEN, true) ?: true
     }
 
     fun saveUserEmail(email: String) {
-        userPreferences?.edit {
+        userPreferences.edit {
             putString(USER_EMAIL, email)
         }
     }
 
     fun getUserEmail(): String? {
-        return userPreferences?.getString(USER_EMAIL, null)
+        return userPreferences.getString(USER_EMAIL, null)
     }
 
 
     fun clearUserPreferences() {
-        userPreferences?.edit {
+        userPreferences.edit {
             clear()
         }
     }

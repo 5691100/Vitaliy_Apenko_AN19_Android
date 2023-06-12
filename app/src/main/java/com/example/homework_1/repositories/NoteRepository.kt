@@ -23,7 +23,19 @@ class NoteRepository @Inject constructor(
     }
 
     suspend fun getUserNotesByEmail(email: String): ArrayList<Note> {
-        return (noteDao.getNotesByEmail(email)?.map {
+        return (noteDao.getNotesByEmail(email).map {
+            Note(
+                it.id,
+                it.userEmail,
+                it.title,
+                it.message,
+                it.date
+            )
+        } as? ArrayList<Note>) ?: arrayListOf()
+    }
+
+    suspend fun getSearchedNotesByEmail(email: String, search: String): ArrayList<Note> {
+        return (noteDao.getSearchByEmail(email, search).map {
             Note(
                 it.id,
                 it.userEmail,
@@ -37,7 +49,7 @@ class NoteRepository @Inject constructor(
     suspend fun addNotes(note: Note): Boolean {
         noteDao.insertNote(
             NoteEntity(
-                note.id,
+                0,
                 note.userEmail,
                 note.title,
                 note.message,

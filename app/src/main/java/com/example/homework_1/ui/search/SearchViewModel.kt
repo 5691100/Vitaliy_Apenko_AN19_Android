@@ -20,14 +20,8 @@ class SearchViewModel @Inject constructor(
 
     fun getUserSearchedNotes(email: String, input: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val userNotesList = noteRepository.getUserNotesByEmail(email)
-            val userSearchList = ArrayList<Note>()
-            for (note in userNotesList) {
-                if (note.title.contains(input) || note.message.contains(input)) {
-                    userSearchList.add(note)
-                }
-            }
-            notesList.postValue(userSearchList)
+            val userSearchNotesList = noteRepository.getSearchedNotesByEmail(email, input)
+            notesList.postValue(userSearchNotesList)
         }
     }
 }

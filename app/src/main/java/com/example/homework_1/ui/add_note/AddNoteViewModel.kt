@@ -14,8 +14,6 @@ class AddNoteViewModel @Inject constructor(
     private val noteRepository: NoteRepository,
 ) : ViewModel() {
 
-
-
     var noteSaved: (() -> Unit)? = null
 
     fun addNewNote(note: Note) {

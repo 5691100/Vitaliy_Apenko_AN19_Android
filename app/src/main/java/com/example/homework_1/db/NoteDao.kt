@@ -17,4 +17,7 @@ interface NoteDao {
 
     @Query("SELECT * FROM note WHERE userEmail=(:userEmail)")
     suspend fun getNotesByEmail(userEmail: String): List<NoteEntity>
+
+    @Query("SELECT * FROM note WHERE userEmail=(:userEmail) and (title LIKE '%' || :search || '%' or message LIKE '%' || :search || '%')")
+    suspend fun getSearchByEmail(userEmail: String, search: String): List<NoteEntity>
 }

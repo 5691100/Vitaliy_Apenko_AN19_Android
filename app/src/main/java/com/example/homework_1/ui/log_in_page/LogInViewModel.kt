@@ -24,11 +24,15 @@ class LogInViewModel @Inject constructor(
 
         viewModelScope.launch(Dispatchers.IO) {
             val user = userRepository.getUser(email)
-            if (user.userEmailPassword == password) {
-                sharedPreferenceRepository.saveUserEmail(email)
-                isPasswordCorrect?.invoke()
+            if (user != null) {
+                if (user.userEmailPassword == password) {
+                    sharedPreferenceRepository.saveUserEmail(email)
+                    isPasswordCorrect?.invoke()
+                } else {
+                    isPasswordIncorrect?.invoke()
+                }
             } else {
-                isPasswordIncorrect?.invoke()
+                isUserNotExist?.invoke()
             }
         }
     }

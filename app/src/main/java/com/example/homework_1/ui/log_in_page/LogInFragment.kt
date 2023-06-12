@@ -35,8 +35,6 @@ class LogInFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         binding.logInButton.setOnClickListener {
             val email = binding.emailEditText.getString()
             val password = binding.passwordEditText.getString()
