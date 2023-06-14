@@ -29,6 +29,9 @@
     <string name="onboarding_step_1_text">Find projects from companies everywhere in the world</string>
     <string name="onboarding_step_2_text">Work hard and level up!</string>
     <string name="onboarding_step_3_text">Enjoy your progress!</string>
+    <string name="delete">Delete</string>
+    <string name="edit_title">Edit title</string>
+    <string name="edit_message">Edit message</string>
 
 
 </resources>

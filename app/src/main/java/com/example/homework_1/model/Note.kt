@@ -6,6 +6,6 @@ data class Note (
     val id: Long,
     val userEmail: String,
     val title: String,
-    val message: String,
+    var message: String,
     val date: Long,
 )
