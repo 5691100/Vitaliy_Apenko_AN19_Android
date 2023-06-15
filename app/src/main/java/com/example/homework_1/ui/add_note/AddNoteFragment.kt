@@ -8,15 +8,24 @@ import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.example.homework_1.R
 import com.example.homework_1.databinding.FragmentAddNoteBinding
 import com.example.homework_1.model.Note
 import com.example.homework_1.repositories.SharedPreferenceRepository
+import com.example.homework_1.ui.notes_list.NotesListFragment
 import com.example.homework_1.util.getString
+import com.example.homework_1.util.replaceFragment
 import com.example.homework_1.validate.ValidationResult
 import com.example.homework_1.validate.titleValidation
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class AddNoteFragment : Fragment() {
+
+    @Inject
+    lateinit var sharedPreferenceRepository: SharedPreferenceRepository
 
     private val viewModel: AddNoteViewModel by viewModels()
 
@@ -36,19 +45,21 @@ class AddNoteFragment : Fragment() {
 
         viewModel.run {
             noteSaved = {
-                Toast.makeText(requireContext(), "NoteSaved", Toast.LENGTH_LONG).show()
-                parentFragmentManager.popBackStack()
+                binding.root.post {
+                    Toast.makeText(requireContext(), "NoteSaved", Toast.LENGTH_LONG).show()
+                    parentFragmentManager.replaceFragment(
+                        R.id.container2,
+                        NotesListFragment(),
+                        true
+                    )
+                }
             }
         }
-
         binding.titleAddEditText.doAfterTextChanged {
             isValidTitle()
         }
         binding.addNoteButton.setOnClickListener {
             addNote()
-        }
-        binding.backToNotes.setOnClickListener {
-            parentFragmentManager.popBackStack()
         }
     }
 
@@ -65,10 +76,11 @@ class AddNoteFragment : Fragment() {
     }
 
     private fun addNote() {
-        val email = SharedPreferenceRepository.getUserEmail()
+        val email = sharedPreferenceRepository.getUserEmail()
         if (email != null) {
             viewModel.addNewNote(
                 Note(
+                    0,
                     email,
                     binding.titleAddEditText.getString(),
                     binding.messageAddEditText.getString(),

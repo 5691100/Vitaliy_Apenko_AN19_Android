@@ -1,36 +1,34 @@
 package com.example.homework_1.repositories
 
-import com.example.homework_1.db.DataBase
+import com.example.homework_1.db.UserDao
 import com.example.homework_1.model.User
-import com.example.homework_1.model.entity.UserEntity
+import com.example.homework_1.util.toUser
+import com.example.homework_1.util.toUserEntity
+import javax.inject.Inject
 
-class UserRepository {
+class UserRepository @Inject constructor(
+    private val userDao: UserDao
+) {
 
-    fun getUsers(): ArrayList<User> {
-        return (DataBase.userDao?.getAllNotes()?.map {
-            User(
-                it.firstName,
-                it.secondName,
-                it.userEmail,
-                it.userEmailPassword
-            )
-        } as? ArrayList<User>) ?: arrayListOf()
+//    suspend fun getAllUsers(): ArrayList<User> {
+//        return (userDao.getAllUsers().toListUser())
+//    }
+
+    suspend fun getUser(email: String): User? {
+        val userEntity = userDao.getUser(email)
+        return if (userEntity != null) {
+            userEntity.toUser()
+        } else {
+            null
+        }
     }
 
-    fun addUser(user: User): Boolean {
-        DataBase.userDao?.insertUser(
-            UserEntity(
-            user.firstName,
-            user.secondName,
-            user.userEmail,
-            user.userEmailPassword
-        )
-        )
+    suspend fun addUser(user: User): Boolean {
+        userDao.insertUser(user.toUserEntity())
         return true
     }
 
-    fun removeUser(user: User) {
-        DataBase.listOfUsers.remove(user)
+    suspend fun removeUser(user: User) {
+        userDao.deleteUser(user.toUserEntity())
     }
-
 }

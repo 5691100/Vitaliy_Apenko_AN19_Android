@@ -1,4 +1,4 @@
-package com.example.homework_1.ui.search
+package com.example.homework_1.ui.notes_list.dialog
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,17 +11,21 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SearchViewModel @Inject constructor(
+class EditMessageViewModel @Inject constructor(
     private val noteRepository: NoteRepository
-): ViewModel() {
+) : ViewModel() {
 
-    val notesList = MutableLiveData<ArrayList<Note>?>()
+    val note = MutableLiveData<Note>()
 
+    fun findNoteById(id: Long) {
+        viewModelScope.launch {
+            note.postValue(noteRepository.getNotesWithId(id))
+        }
+    }
 
-    fun getUserSearchedNotes(email: String, input: String) {
+    fun replaceNote(note: Note) {
         viewModelScope.launch(Dispatchers.IO) {
-            val userSearchNotesList = noteRepository.getSearchedNotesByEmail(email, input)
-            notesList.postValue(userSearchNotesList)
+            noteRepository.replaceNote(note)
         }
     }
 }

@@ -1,16 +1,20 @@
 package com.example.homework_1.db
 
 import androidx.room.*
+import com.example.homework_1.model.User
 import com.example.homework_1.model.entity.UserEntity
 
 @Dao
 interface UserDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertUser(user: UserEntity)
+    suspend fun insertUser(user: UserEntity)
 
     @Delete
-    fun deleteUser(user: UserEntity)
+    suspend fun deleteUser(user: UserEntity)
 
     @Query("SELECT * FROM user")
-    fun getAllNotes(): List<UserEntity>
+    suspend fun getAllUsers(): List<UserEntity>
+
+    @Query("SELECT * FROM user WHERE userEmail=(:userEmail)")
+    suspend fun getUser(userEmail: String): UserEntity?
 }

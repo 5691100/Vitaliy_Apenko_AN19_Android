@@ -1,38 +1,41 @@
 package com.example.homework_1.repositories
 
-import com.example.homework_1.db.DataBase
+import com.example.homework_1.db.NoteDao
 import com.example.homework_1.model.Note
-import com.example.homework_1.model.entity.NoteEntity
+import com.example.homework_1.util.toListNote
+import com.example.homework_1.util.toNote
+import com.example.homework_1.util.toNoteEntity
+import javax.inject.Inject
 
-class NoteRepository {
+class NoteRepository @Inject constructor(
+    private val noteDao: NoteDao
+) {
 
-    fun getNotes(): ArrayList<Note> {
-        return (DataBase.noteDao?.getAllNotes()?.map {
-            Note(
-                it.userEmail,
-                it.title,
-                it.message,
-                it.date
-            )
+    suspend fun getNotesWithId(id: Long): Note {
+        return noteDao.getNoteWithId(id).toNote()
+    }
+
+    suspend fun getUserNotesByEmail(email: String): ArrayList<Note> {
+        return (noteDao.getNotesByEmail(email).map {
+            it.toNote()
         } as? ArrayList<Note>) ?: arrayListOf()
     }
 
-    fun addNotes(note: Note): Boolean {
-        DataBase.noteDao?.insertNote(
-            NoteEntity(
-                0,
-            note.userEmail,
-            note.title,
-            note.message,
-            note.date
-        )
-        )
+    suspend fun getSearchedNotesByEmail(email: String, search: String): ArrayList<Note> {
+        return (noteDao.getSearchByEmail(email, search).toListNote())
+    }
+
+    suspend fun addNotes(note: Note): Boolean {
+        noteDao.insertNote(note.toNoteEntity())
         return true
     }
 
-    fun removeNote(note: Note) {
-        DataBase.listOfNotes.remove(note)
+    suspend fun removeNote(note: Note) {
+        noteDao.deleteNote(note.toNoteEntity())
     }
 
-
+    suspend fun replaceNote(note: Note): Boolean {
+        noteDao.insertNote(note.toNoteEntity())
+        return true
+    }
 }

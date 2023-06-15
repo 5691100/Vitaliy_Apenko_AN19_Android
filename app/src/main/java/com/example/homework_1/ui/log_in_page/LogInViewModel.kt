@@ -1,21 +1,38 @@
 package com.example.homework_1.ui.log_in_page
 
 import androidx.lifecycle.ViewModel
-import com.example.homework_1.model.User
+import androidx.lifecycle.viewModelScope
+import com.example.homework_1.repositories.SharedPreferenceRepository
 import com.example.homework_1.repositories.UserRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LogInViewModel : ViewModel() {
+@HiltViewModel
+class LogInViewModel @Inject constructor(
+    private val userRepository: UserRepository,
+    private val sharedPreferenceRepository: SharedPreferenceRepository
+    ) : ViewModel() {
 
-    private val userRepository = UserRepository()
+    var isPasswordCorrect: (() -> Unit)? = null
+    var isPasswordIncorrect: (() -> Unit)? = null
+    var isUserNotExist: (() -> Unit)? = null
 
-    fun findUserByEmail(email: String): User? {
-        val userList = userRepository.getUsers()
-        var isUserExist: User ?= null
-        for (user in userList) {
-            if (user.userEmail == email) {
-                isUserExist = user
+    fun checkLogin(email: String, password: String) {
+
+        viewModelScope.launch(Dispatchers.IO) {
+            val user = userRepository.getUser(email)
+            if (user != null) {
+                if (user.userEmailPassword == password) {
+                    sharedPreferenceRepository.saveUserEmail(email)
+                    isPasswordCorrect?.invoke()
+                } else {
+                    isPasswordIncorrect?.invoke()
+                }
+            } else {
+                isUserNotExist?.invoke()
             }
         }
-        return isUserExist
     }
 }

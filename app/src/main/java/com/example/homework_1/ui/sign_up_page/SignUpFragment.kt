@@ -15,7 +15,9 @@ import com.example.homework_1.model.User
 import com.example.homework_1.ui.log_in_page.LogInFragment
 import com.example.homework_1.util.getString
 import com.example.homework_1.util.replaceFragment
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpFragment : Fragment() {
 
     private val viewModel: SignUpViewModel by viewModels()
@@ -36,8 +38,10 @@ class SignUpFragment : Fragment() {
 
         viewModel.run {
             userSaved = {
-                Toast.makeText(requireContext(), "Sign-Up successful", Toast.LENGTH_LONG).show()
-                parentFragmentManager.replaceFragment(R.id.container, LogInFragment(), true)
+                binding.root.post {
+                    Toast.makeText(requireContext(), "Sign-Up successful", Toast.LENGTH_LONG).show()
+                    parentFragmentManager.replaceFragment(R.id.container, LogInFragment(), true)
+                }
             }
         }
 
