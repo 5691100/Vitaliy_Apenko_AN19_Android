@@ -7,6 +7,7 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.*
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -113,6 +114,20 @@ class NotesListFragment : Fragment() {
     private fun showEditDialog(note: Note) {
         val id = note.id
         setFragmentResult("Id", bundleOf("bundleKey" to id))
-        EditMessageFragment().show(parentFragmentManager, "Edit message")
+        EditMessageFragment().apply {
+            onDismiss = {
+                viewModel.run {
+                    sharedPreferenceRepository.getUserEmail()?.let {
+                        getUserNotes(it)
+                    }
+                    notesList.observe(viewLifecycleOwner) {
+                        if (it != null) {
+                            setList(it)
+                        }
+                    }
+                }
+                Toast.makeText(requireContext(), "Note edited!", Toast.LENGTH_LONG).show()
+            }
+        }.show(parentFragmentManager, "Edit message")
     }
 }

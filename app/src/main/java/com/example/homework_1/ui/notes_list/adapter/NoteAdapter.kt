@@ -13,11 +13,11 @@ class NoteAdapter (
         ) : ListAdapter<Note, NoteViewHolder>(
     object : DiffUtil.ItemCallback<Note>() {
         override fun areItemsTheSame(oldItem: Note, newItem: Note): Boolean {
-            return oldItem == newItem
+            return false
         }
 
         override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
-            return oldItem == newItem
+            return false
         }
     }
 ) {

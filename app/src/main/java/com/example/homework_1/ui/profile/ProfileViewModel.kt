@@ -3,7 +3,6 @@ package com.example.homework_1.ui.profile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.homework_1.model.User
 import com.example.homework_1.repositories.NoteRepository
 import com.example.homework_1.repositories.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

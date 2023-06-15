@@ -2,7 +2,6 @@ package com.example.homework_1.ui.log_in_page
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.homework_1.model.User
 import com.example.homework_1.repositories.SharedPreferenceRepository
 import com.example.homework_1.repositories.UserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

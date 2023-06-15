@@ -1,13 +1,11 @@
 package com.example.homework_1.ui.notes_list
 
-import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.homework_1.model.Note
 import com.example.homework_1.repositories.NoteRepository
 import com.example.homework_1.repositories.SharedPreferenceRepository
-import dagger.hilt.android.HiltAndroidApp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

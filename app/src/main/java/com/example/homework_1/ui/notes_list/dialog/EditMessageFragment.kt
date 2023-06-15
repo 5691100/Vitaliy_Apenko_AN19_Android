@@ -25,6 +25,8 @@ class EditMessageFragment : BottomSheetDialogFragment() {
 
     private lateinit var binding: FragmentEditMessageBinding
 
+    var onDismiss: (()-> Unit)? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -63,8 +65,7 @@ class EditMessageFragment : BottomSheetDialogFragment() {
                             it.date
                         ))
                     val id = it.id
-                    setFragmentResult("NewId", bundleOf("bundleKey" to id))
-                    Toast.makeText(requireContext(), "Note edited!", Toast.LENGTH_LONG).show()
+                    onDismiss?.invoke()
                     dismiss()
                 }
             }

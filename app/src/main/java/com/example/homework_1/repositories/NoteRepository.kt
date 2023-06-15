@@ -1,10 +1,10 @@
 package com.example.homework_1.repositories
 
-import com.example.homework_1.db.DataBaseModule
 import com.example.homework_1.db.NoteDao
 import com.example.homework_1.model.Note
-import com.example.homework_1.model.entity.NoteEntity
-import com.example.homework_1.util.getNoteFromEntity
+import com.example.homework_1.util.toListNote
+import com.example.homework_1.util.toNote
+import com.example.homework_1.util.toNoteEntity
 import javax.inject.Inject
 
 class NoteRepository @Inject constructor(
@@ -12,69 +12,30 @@ class NoteRepository @Inject constructor(
 ) {
 
     suspend fun getNotesWithId(id: Long): Note {
-        val noteEntity = noteDao.getNoteWithId(id)
-        return getNoteFromEntity(noteEntity)
+        return noteDao.getNoteWithId(id).toNote()
     }
 
     suspend fun getUserNotesByEmail(email: String): ArrayList<Note> {
         return (noteDao.getNotesByEmail(email).map {
-            Note(
-                it.id,
-                it.userEmail,
-                it.title,
-                it.message,
-                it.date
-            )
+            it.toNote()
         } as? ArrayList<Note>) ?: arrayListOf()
     }
 
     suspend fun getSearchedNotesByEmail(email: String, search: String): ArrayList<Note> {
-        return (noteDao.getSearchByEmail(email, search).map {
-            Note(
-                it.id,
-                it.userEmail,
-                it.title,
-                it.message,
-                it.date
-            )
-        } as? ArrayList<Note>) ?: arrayListOf()
+        return (noteDao.getSearchByEmail(email, search).toListNote())
     }
 
     suspend fun addNotes(note: Note): Boolean {
-        noteDao.insertNote(
-            NoteEntity(
-                0,
-                note.userEmail,
-                note.title,
-                note.message,
-                note.date
-            )
-        )
+        noteDao.insertNote(note.toNoteEntity())
         return true
     }
 
     suspend fun removeNote(note: Note) {
-        noteDao.deleteNote(
-            NoteEntity(
-                note.id,
-                note.userEmail,
-                note.title,
-                note.message,
-                note.date
-            )
-        )
+        noteDao.deleteNote(note.toNoteEntity())
     }
 
     suspend fun replaceNote(note: Note): Boolean {
-        noteDao.insertNote(
-            NoteEntity(
-                note.id,
-                note.userEmail,
-                note.title,
-                note.message,
-                note.date
-            )
-        )
+        noteDao.insertNote(note.toNoteEntity())
         return true
     }
 }

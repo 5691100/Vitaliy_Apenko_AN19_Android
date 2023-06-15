@@ -8,11 +8,9 @@ import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.room.PrimaryKey
 import com.example.homework_1.R
 import com.example.homework_1.databinding.FragmentAddNoteBinding
 import com.example.homework_1.model.Note
-import com.example.homework_1.model.entity.NoteEntity
 import com.example.homework_1.repositories.SharedPreferenceRepository
 import com.example.homework_1.ui.notes_list.NotesListFragment
 import com.example.homework_1.util.getString
