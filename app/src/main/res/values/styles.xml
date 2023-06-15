@@ -1,11 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="app_name_style">
+        <item name="android:fontFamily">sans-serif-black</item>
+        <item name="android:textSize">30sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
     <style name="button_style">
         <item name="android:layout_width">260dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/rounded_button</item>
+        <item name="android:fontFamily">sans-serif-light</item>
         <item name="android:textAllCaps">false</item>
         <item name="android:textSize">18sp</item>
+        <item name="android:background">@drawable/rounded_button</item>
+    </style>
+
+    <style name="description_style">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="log_in_style">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="input_style">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="title_sign_log">
+        <item name="android:textSize">26sp</item>
+    </style>
+
+    <style name="back_add_style">
+        <item name="android:textSize">20sp</item>
     </style>
 </resources>
